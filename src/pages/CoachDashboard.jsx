@@ -98,12 +98,12 @@ const CoachDashboard = () => {
                 overflowX: 'auto'
             }}>
                 {[
-                    { id: 'overview', label: '📊 Overview' },
-                    { id: 'athletes', label: '🏃 Scout Athletes' },
-                    { id: 'my-squad', label: '👥 My Squad' },
-                    { id: 'organizations', label: '🏛️ Organizations' },
-                    { id: 'messages', label: '📬 Messages' },
-                    { id: 'portfolio', label: '🏆 Portfolio' }
+                    { id: 'overview', label: 'Overview' },
+                    { id: 'athletes', label: 'Scout Athletes' },
+                    { id: 'my-squad', label: 'My Squad' },
+                    { id: 'organizations', label: 'Organizations' },
+                    { id: 'messages', label: 'Messages' },
+                    { id: 'portfolio', label: 'Portfolio' }
                 ].map(tab => (
                     <button
                         key={tab.id}

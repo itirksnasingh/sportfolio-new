@@ -99,12 +99,12 @@ const AthleteDashboard = () => {
                 overflowX: 'auto'
             }}>
                 {[
-                    { id: 'overview', label: '📊 Overview', icon: '📊' },
-                    { id: 'opportunities', label: '🎯 Opportunities', icon: '🎯' },
-                    { id: 'connections', label: '👥 Network', icon: '👥' },
-                    { id: 'coaches', label: '🎓 Coaches', icon: '🎓' },
-                    { id: 'stats', label: '📈 Stats & Videos', icon: '📈' },
-                    { id: 'ai-insights', label: '🤖 AI Insights', icon: '🤖' }
+                    { id: 'overview', label: 'Overview', icon: '📊' },
+                    { id: 'opportunities', label: 'Opportunities', icon: '🎯' },
+                    { id: 'connections', label: 'Network', icon: '👥' },
+                    { id: 'coaches', label: 'Coaches', icon: '🎓' },
+                    { id: 'stats', label: 'Stats & Videos', icon: '📈' },
+                    { id: 'ai-insights', label: 'AI Insights', icon: '🤖' }
                 ].map(tab => (
                     <button
                         key={tab.id}

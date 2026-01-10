@@ -90,12 +90,12 @@ const OrgDashboard = () => {
                 overflowX: 'auto'
             }}>
                 {[
-                    { id: 'overview', label: '📊 Overview' },
-                    { id: 'scout-athletes', label: '🏃 Scout Athletes' },
-                    { id: 'scout-coaches', label: '🎓 Scout Coaches' },
-                    { id: 'shortlisted', label: '⭐ Shortlisted' },
-                    { id: 'messages', label: '📬 Messages' },
-                    { id: 'opportunities', label: '🎯 My Opportunities' }
+                    { id: 'overview', label: 'Overview' },
+                    { id: 'scout-athletes', label: 'Scout Athletes' },
+                    { id: 'scout-coaches', label: 'Scout Coaches' },
+                    { id: 'shortlisted', label: 'Shortlisted' },
+                    { id: 'messages', label: 'Messages' },
+                    { id: 'opportunities', label: 'My Opportunities' }
                 ].map(tab => (
                     <button
                         key={tab.id}
