@@ -1,17 +1,44 @@
 import React from 'react';
+import EmptyState from '../components/EmptyState';
 
 const CoachDashboard = () => {
-    return (
-        <div>
-            <h1 style={{ marginBottom: '2rem' }}>Coach Dashboard</h1>
-            <p>Welcome back, Coach.</p>
+  return (
+    <div>
+      <h1 style={{ marginBottom: '0.5rem' }}>Coach Dashboard</h1>
+      <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
+        Manage athletes and training plans
+      </p>
 
-            <div style={{ marginTop: '2rem', padding: '2rem', background: 'var(--card-bg)', borderRadius: 'var(--border-radius)' }}>
-                <h3>My Squad</h3>
-                <p style={{ color: 'var(--text-secondary)', marginTop: '1rem' }}>List of athletes under your training will appear here.</p>
-            </div>
+      <section style={{ marginBottom: '3rem' }}>
+        <h2 style={{ marginBottom: '1rem' }}>My Athletes</h2>
+
+        <EmptyState
+          icon="👥"
+          title="No athletes connected"
+          description="Invite athletes to track performance and progress."
+          actionText="Invite Athlete"
+        />
+      </section>
+
+      <section>
+        <h2 style={{ marginBottom: '1rem' }}>AI Coaching Suggestions</h2>
+
+        <div
+          style={{
+            padding: '1.5rem',
+            background: 'var(--card-bg)',
+            borderRadius: 'var(--border-radius)',
+            border: '1px solid var(--border-color)',
+          }}
+        >
+          <p>
+            🧠 Coaches training U-19 badminton athletes often see better results
+            by focusing on agility & endurance in pre-season.
+          </p>
         </div>
-    );
+      </section>
+    </div>
+  );
 };
 
 export default CoachDashboard;
