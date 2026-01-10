@@ -9,8 +9,43 @@ const Header = ({ theme, toggleTheme }) => {
                     Sport<span className="accent-dot">folio</span>
                 </Link>
                 <ul className="nav-links">
-                    <li><NavLink to="/discover" style={({ isActive }) => ({ color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)' })}>Discover</NavLink></li>
-                    <li><NavLink to="/about" style={({ isActive }) => ({ color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)' })}>About</NavLink></li>
+                    <li style={{ marginLeft: '120px' }}>
+                        <NavLink 
+                            to="/" 
+                            end
+                            style={({ isActive }) => ({ 
+                                color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                                fontWeight: isActive ? '600' : '500',
+                                transition: 'all 0.2s'
+                            })}
+                        >
+                            Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                            to="/discover" 
+                            style={({ isActive }) => ({ 
+                                color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                                fontWeight: isActive ? '600' : '500',
+                                transition: 'all 0.2s'
+                            })}
+                        >
+                            Discover
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                            to="/about" 
+                            style={({ isActive }) => ({ 
+                                color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                                fontWeight: isActive ? '600' : '500',
+                                transition: 'all 0.2s'
+                            })}
+                        >
+                            About
+                        </NavLink>
+                    </li>
                 </ul>
                 <div className="header-actions">
                     <button
@@ -26,7 +61,7 @@ const Header = ({ theme, toggleTheme }) => {
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                         )}
                     </button>
-                    <Link to="/login" className="btn-primary">Get Started</Link>
+                    <Link to="/login" className="btn-primary">Login / Signup</Link>
                 </div>
             </nav>
         </header>

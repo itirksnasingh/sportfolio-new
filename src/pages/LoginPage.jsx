@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const LoginPage = () => {
-    const [role, setRole] = useState('athlete');
+    const [searchParams] = useSearchParams();
+    const roleParam = searchParams.get('role');
+    const [role, setRole] = useState(roleParam || 'athlete');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (roleParam) {
+            setRole(roleParam);
+        }
+    }, [roleParam]);
 
     const handleLogin = (e) => {
         e.preventDefault();
+        // Store user role in localStorage
+        localStorage.setItem('userRole', role);
         navigate(`/dashboard/${role}`);
     };
 
@@ -28,39 +38,44 @@ const LoginPage = () => {
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem' }}>
                             <button
                                 type="button"
-                                onClick={() => setRole('athlete')}
+                                onClick={() => !roleParam && setRole('athlete')}
+                                disabled={roleParam}
                                 style={{
                                     padding: '0.5rem',
                                     borderRadius: '6px',
                                     border: role === 'athlete' ? '1px solid var(--accent-primary)' : '1px solid var(--border-color)',
                                     background: role === 'athlete' ? 'var(--accent-glow)' : 'transparent',
                                     color: 'var(--text-primary)',
-                                    cursor: 'pointer',
+                                    cursor: roleParam ? 'not-allowed' : 'pointer',
                                     fontWeight: '500',
-                                    fontSize: '0.9rem'
+                                    fontSize: '0.9rem',
+                                    opacity: roleParam && role !== 'athlete' ? 0.5 : 1
                                 }}
                             >
-                                Athlete
+                                Athlete {roleParam === 'athlete' && '🔒'}
                             </button>
                             <button
                                 type="button"
-                                onClick={() => setRole('coach')}
+                                onClick={() => !roleParam && setRole('coach')}
+                                disabled={roleParam}
                                 style={{
                                     padding: '0.5rem',
                                     borderRadius: '6px',
                                     border: role === 'coach' ? '1px solid var(--accent-primary)' : '1px solid var(--border-color)',
                                     background: role === 'coach' ? 'var(--accent-glow)' : 'transparent',
                                     color: 'var(--text-primary)',
-                                    cursor: 'pointer',
+                                    cursor: roleParam ? 'not-allowed' : 'pointer',
                                     fontWeight: '500',
-                                    fontSize: '0.9rem'
+                                    fontSize: '0.9rem',
+                                    opacity: roleParam && role !== 'coach' ? 0.5 : 1
                                 }}
                             >
-                                Coach
+                                Coach {roleParam === 'coach' && '🔒'}
                             </button>
                             <button
                                 type="button"
-                                onClick={() => setRole('org')}
+                                onClick={() => !roleParam && setRole('org')}
+                                disabled={roleParam}
                                 style={{
                                     padding: '0.5rem',
                                     borderRadius: '6px',
@@ -69,12 +84,23 @@ const LoginPage = () => {
                                     color: 'var(--text-primary)',
                                     fontWeight: '500',
                                     fontSize: '0.9rem',
-                                    cursor: 'pointer'
+                                    cursor: roleParam ? 'not-allowed' : 'pointer',
+                                    opacity: roleParam && role !== 'org' ? 0.5 : 1
                                 }}
                             >
-                                Organization
+                                Organization {roleParam === 'org' && '🔒'}
                             </button>
                         </div>
+                        {roleParam && (
+                            <p style={{ 
+                                marginTop: '0.75rem', 
+                                fontSize: '0.85rem', 
+                                color: 'var(--accent-primary)',
+                                textAlign: 'center'
+                            }}>
+                                ✓ Role selected and locked
+                            </p>
+                        )}
                     </div>
 
                     <div style={{ marginBottom: '1rem' }}>

@@ -1,7 +1,26 @@
 import React from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 
 const DashboardLayout = ({ theme, toggleTheme }) => {
+    const navigate = useNavigate();
+    const userRole = localStorage.getItem('userRole');
+
+    const handleLogout = () => {
+        localStorage.removeItem('userRole');
+        navigate('/login');
+    };
+
+    // Role-based navigation items
+    const getDashboardLinks = () => {
+        const links = {
+            athlete: { path: '/dashboard/athlete', label: 'My Dashboard' },
+            coach: { path: '/dashboard/coach', label: 'My Dashboard' },
+            org: { path: '/dashboard/org', label: 'My Dashboard' }
+        };
+        return links[userRole] || links.athlete;
+    };
+
+    const dashboardLink = getDashboardLinks();
     return (
         <div className="dashboard-container" style={{ display: 'flex', minHeight: '100vh' }}>
             {/* Sidebar */}
@@ -17,7 +36,7 @@ const DashboardLayout = ({ theme, toggleTheme }) => {
 
                 <nav style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <NavLink
-                        to="/dashboard/athlete"
+                        to={dashboardLink.path}
                         className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
                         style={({ isActive }) => ({
                             color: isActive ? 'var(--accent-primary)' : 'var(--text-secondary)',
@@ -26,37 +45,35 @@ const DashboardLayout = ({ theme, toggleTheme }) => {
                             padding: '0.5rem 0'
                         })}
                     >
-                        Athlete Dashboard
-                    </NavLink>
-                    <NavLink
-                        to="/dashboard/coach"
-                        className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                        style={({ isActive }) => ({
-                            color: isActive ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                            textDecoration: 'none',
-                            fontWeight: '600',
-                            padding: '0.5rem 0'
-                        })}
-                    >
-                        Coach Dashboard
-                    </NavLink>
-                    <NavLink
-                        to="/dashboard/org"
-                        className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                        style={({ isActive }) => ({
-                            color: isActive ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                            textDecoration: 'none',
-                            fontWeight: '600',
-                            padding: '0.5rem 0'
-                        })}
-                    >
-                        Org Dashboard
+                        {dashboardLink.label}
                     </NavLink>
                 </nav>
 
                 <div style={{ marginTop: 'auto' }}>
-                    <button onClick={toggleTheme} className="theme-toggle" style={{ margin: '0 auto' }}>
-                        {theme === 'dark' ? '☀️' : '🌙'}
+                    <button 
+                        onClick={handleLogout} 
+                        style={{
+                            width: '100%',
+                            padding: '0.75rem',
+                            marginBottom: '1rem',
+                            border: '1px solid var(--border-color)',
+                            borderRadius: '6px',
+                            background: 'transparent',
+                            color: 'var(--text-secondary)',
+                            cursor: 'pointer',
+                            fontWeight: '600',
+                            transition: 'all 0.2s'
+                        }}
+                        onMouseOver={(e) => {
+                            e.target.style.borderColor = 'var(--accent-primary)';
+                            e.target.style.color = 'var(--accent-primary)';
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.borderColor = 'var(--border-color)';
+                            e.target.style.color = 'var(--text-secondary)';
+                        }}
+                    >
+                        Logout
                     </button>
                     <div style={{ marginTop: '1rem' }}>
                         <NavLink to="/" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9rem' }}>
