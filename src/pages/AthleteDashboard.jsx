@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-const StatCard = ({ label, value, trend }) => (
+const StatCard = ({ label, value, trend, icon }) => (
     <div style={{
         background: 'var(--card-bg)',
         padding: '1.5rem',
         borderRadius: 'var(--border-radius)',
-        border: '1px solid var(--border-color)'
+        border: '1px solid var(--border-color)',
+        position: 'relative',
+        overflow: 'hidden'
     }}>
+        <div style={{ position: 'absolute', top: '1rem', right: '1rem', fontSize: '2rem', opacity: 0.1 }}>{icon}</div>
         <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{label}</div>
         <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{value}</div>
         {trend && <div style={{ color: 'var(--accent-primary)', fontSize: '0.8rem', marginTop: '0.5rem' }}>{trend}</div>}
@@ -14,6 +17,7 @@ const StatCard = ({ label, value, trend }) => (
 );
 
 const AthleteDashboard = () => {
+    const [activeTab, setActiveTab] = useState('overview');
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [profileData, setProfileData] = useState({
         fullName: 'Rahul Kumar',
@@ -67,54 +71,396 @@ const AthleteDashboard = () => {
     };
     return (
         <div>
-            <header style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <header style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
                 <div>
-                    <h1 style={{ fontSize: '2rem' }}>Hello, {profileData.fullName}</h1>
-                    <p style={{ color: 'var(--text-secondary)' }}>Badminton | Under-19 | Pune</p>
+                    <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Hello, {profileData.fullName}</h1>
+                    <p style={{ color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span>🏸 {profileData.sport}</span>
+                        <span>•</span>
+                        <span>{profileData.category}</span>
+                        <span>•</span>
+                        <span>📍 {profileData.location}</span>
+                    </p>
                 </div>
-                <button className="btn-primary" onClick={() => setIsProfileOpen(true)}>Update Profile</button>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                    <button className="btn-secondary" onClick={() => setIsProfileOpen(true)}>✏️ Edit Profile</button>
+                    <button className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span>🤖</span> AI Assistant
+                    </button>
+                </div>
             </header>
 
-            <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
-                <StatCard label="Profile Completion" value="85%" trend="+5% this week" />
-                <StatCard label="Matches Played" value="12" />
-                <StatCard label="Win Rate" value="68%" trend="Top 10% in region" />
-                <StatCard label="Opportunities Applied" value="4" />
-            </section>
+            {/* Navigation Tabs */}
+            <div style={{ 
+                display: 'flex', 
+                gap: '1rem', 
+                marginBottom: '2rem', 
+                borderBottom: '1px solid var(--border-color)',
+                overflowX: 'auto'
+            }}>
+                {[
+                    { id: 'overview', label: '📊 Overview', icon: '📊' },
+                    { id: 'opportunities', label: '🎯 Opportunities', icon: '🎯' },
+                    { id: 'connections', label: '👥 Network', icon: '👥' },
+                    { id: 'coaches', label: '🎓 Coaches', icon: '🎓' },
+                    { id: 'stats', label: '📈 Stats & Videos', icon: '📈' },
+                    { id: 'ai-insights', label: '🤖 AI Insights', icon: '🤖' }
+                ].map(tab => (
+                    <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        style={{
+                            padding: '1rem 1.5rem',
+                            background: 'transparent',
+                            border: 'none',
+                            borderBottom: activeTab === tab.id ? '3px solid var(--accent-primary)' : '3px solid transparent',
+                            color: activeTab === tab.id ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                            cursor: 'pointer',
+                            fontWeight: activeTab === tab.id ? '600' : '500',
+                            transition: 'all 0.2s',
+                            whiteSpace: 'nowrap'
+                        }}
+                    >
+                        {tab.label}
+                    </button>
+                ))}
+            </div>
 
-            <section style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
-                <div>
-                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Recommended Opportunities</h2>
-                    <div className="feature-card" style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div>
-                            <h4 style={{ fontSize: '1.1rem' }}>District Level Selection Trials</h4>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Pune District Badminton Association</p>
+            {/* Overview Tab */}
+            {activeTab === 'overview' && (
+                <>
+                    <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
+                        <StatCard label="Profile Completion" value="85%" trend="+5% this week" icon="✅" />
+                        <StatCard label="Profile Views" value="247" trend="+23 this week" icon="👁️" />
+                        <StatCard label="Connections" value="45" trend="12 pending" icon="👥" />
+                        <StatCard label="Opportunities" value="8" trend="2 new today" icon="🎯" />
+                    </section>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+                        <div className="feature-card">
+                            <h2 style={{ fontSize: '1.3rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <span>🔥</span> Recommended Opportunities
+                            </h2>
+                            {[
+                                { title: 'District Level Selection Trials', org: 'Pune District Badminton Association', deadline: '5 days', type: 'Trial' },
+                                { title: 'Yonex Summer Camp Scholarship', org: 'Yonex India', deadline: '12 days', type: 'Scholarship' },
+                                { title: 'State Team Selection', org: 'Maharashtra Sports Authority', deadline: '18 days', type: 'Selection' }
+                            ].map((opp, idx) => (
+                                <div key={idx} className="feature-card" style={{ marginBottom: '1rem', padding: '1rem', background: 'var(--bg-secondary)' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                                        <div style={{ flex: 1 }}>
+                                            <h4 style={{ fontSize: '1rem', marginBottom: '0.25rem' }}>{opp.title}</h4>
+                                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>{opp.org}</p>
+                                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                                <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', background: 'var(--accent-glow)', borderRadius: '4px' }}>{opp.type}</span>
+                                                <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', background: 'var(--card-bg)', borderRadius: '4px' }}>⏰ {opp.deadline}</span>
+                                            </div>
+                                        </div>
+                                        <button className="btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }}>Apply</button>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                        <button className="btn-secondary" style={{ padding: '0.5rem 1rem' }}>View</button>
+
+                        <div>
+                            <div className="feature-card" style={{ marginBottom: '1.5rem', background: 'linear-gradient(135deg, rgba(255,77,0,0.1), rgba(255,0,85,0.1))', border: '1px solid var(--accent-primary)' }}>
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <span>🤖</span> AI-Powered Insights
+                                </h3>
+                                <p style={{ fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '1rem' }}>
+                                    Your profile is <strong>85% complete</strong>. Add video highlights to increase visibility by 40%!
+                                </p>
+                                <button className="btn-secondary" style={{ width: '100%' }}>Get AI Guidance</button>
+                            </div>
+
+                            <div className="feature-card">
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>📊 Quick Stats</h3>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                    {[
+                                        { label: 'Applications Sent', value: '12' },
+                                        { label: 'Interview Requests', value: '3' },
+                                        { label: 'Coach Messages', value: '5' }
+                                    ].map((stat, idx) => (
+                                        <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem', background: 'var(--bg-secondary)', borderRadius: '6px' }}>
+                                            <span style={{ fontSize: '0.9rem' }}>{stat.label}</span>
+                                            <span style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--accent-primary)' }}>{stat.value}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="feature-card" style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div>
-                            <h4 style={{ fontSize: '1.1rem' }}>Yonex Summer Camp Scholarship</h4>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Yonex India</p>
+                </>
+            )}
+
+            {/* Opportunities Tab */}
+            {activeTab === 'opportunities' && (
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                        <h2 style={{ fontSize: '1.5rem' }}>Browse Opportunities</h2>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button className="btn-secondary" style={{ padding: '0.5rem 1rem' }}>All</button>
+                            <button className="btn-secondary" style={{ padding: '0.5rem 1rem' }}>Trials</button>
+                            <button className="btn-secondary" style={{ padding: '0.5rem 1rem' }}>Scholarships</button>
                         </div>
-                        <button className="btn-secondary" style={{ padding: '0.5rem 1rem' }}>View</button>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '1.5rem' }}>
+                        {[
+                            { title: 'National Badminton Championship', org: 'BAI', type: 'Championship', location: 'Delhi', date: 'Feb 15-20', status: 'Open' },
+                            { title: 'Under-19 Training Camp', org: 'Sports Authority of India', type: 'Training', location: 'Bangalore', date: 'Mar 1-30', status: 'Open' },
+                            { title: 'Talent Hunt Program', org: 'Yonex India', type: 'Scouting', location: 'Mumbai', date: 'Feb 25', status: 'Applied' },
+                            { title: 'State Selection Trials', org: 'Maharashtra Sports', type: 'Trial', location: 'Pune', date: 'Feb 10', status: 'Open' }
+                        ].map((opp, idx) => (
+                            <div key={idx} className="feature-card" style={{ padding: '1.5rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                                    <h3 style={{ fontSize: '1.1rem' }}>{opp.title}</h3>
+                                    <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.75rem', background: opp.status === 'Applied' ? 'var(--accent-glow)' : 'var(--bg-secondary)', color: opp.status === 'Applied' ? 'var(--accent-primary)' : 'var(--text-secondary)', borderRadius: '12px', fontWeight: '600' }}>
+                                        {opp.status}
+                                    </span>
+                                </div>
+                                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '0.75rem' }}>{opp.org}</p>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+                                    <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', background: 'var(--bg-secondary)', borderRadius: '4px' }}>{opp.type}</span>
+                                    <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', background: 'var(--bg-secondary)', borderRadius: '4px' }}>📍 {opp.location}</span>
+                                    <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', background: 'var(--bg-secondary)', borderRadius: '4px' }}>📅 {opp.date}</span>
+                                </div>
+                                <button className="btn-primary" style={{ width: '100%' }}>{opp.status === 'Applied' ? 'View Application' : 'Apply Now'}</button>
+                            </div>
+                        ))}
                     </div>
                 </div>
+            )}
 
+            {/* Connections/Network Tab */}
+            {activeTab === 'connections' && (
                 <div>
-                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>AI Insights</h2>
-                    <div style={{
-                        background: 'linear-gradient(135deg, rgba(255,77,0,0.1), rgba(255,0,85,0.1))',
-                        padding: '1.5rem',
-                        borderRadius: 'var(--border-radius)',
-                        border: '1px solid var(--accent-primary)'
-                    }}>
-                        <p style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
-                            Based on your recent match data, your <strong>backhand smash</strong> effectiveness has dropped by 12%. Consider focusing on strength training for your wrist this week.
-                        </p>
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>My Network</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                        <div className="feature-card">
+                            <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Connected Athletes</h3>
+                            {[
+                                { name: 'Priya Sharma', sport: 'Football', location: 'Mumbai', mutual: 5 },
+                                { name: 'Arjun Patel', sport: 'Swimming', location: 'Bangalore', mutual: 3 },
+                                { name: 'Sneha Rao', sport: 'Badminton', location: 'Pune', mutual: 8 }
+                            ].map((athlete, idx) => (
+                                <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'var(--bg-secondary)', borderRadius: '8px', marginBottom: '1rem' }}>
+                                    <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>👤</div>
+                                    <div style={{ flex: 1 }}>
+                                        <h4 style={{ fontSize: '1rem', marginBottom: '0.25rem' }}>{athlete.name}</h4>
+                                        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>{athlete.sport} • {athlete.location}</p>
+                                        <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{athlete.mutual} mutual connections</p>
+                                    </div>
+                                    <button className="btn-secondary" style={{ padding: '0.5rem 1rem' }}>Message</button>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="feature-card">
+                            <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Connection Requests</h3>
+                            {[
+                                { name: 'Vikram Singh', sport: 'Basketball', location: 'Delhi' },
+                                { name: 'Ananya Desai', sport: 'Tennis', location: 'Chennai' }
+                            ].map((request, idx) => (
+                                <div key={idx} style={{ padding: '1rem', background: 'var(--bg-secondary)', borderRadius: '8px', marginBottom: '1rem' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                                        <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(135deg, #ff4d00, #ff0055)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>👤</div>
+                                        <div>
+                                            <h4 style={{ fontSize: '0.95rem', marginBottom: '0.25rem' }}>{request.name}</h4>
+                                            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{request.sport} • {request.location}</p>
+                                        </div>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                        <button className="btn-primary" style={{ flex: 1, padding: '0.5rem' }}>Accept</button>
+                                        <button className="btn-secondary" style={{ flex: 1, padding: '0.5rem' }}>Decline</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </section>
+            )}
+
+            {/* Coaches Tab */}
+            {activeTab === 'coaches' && (
+                <div>
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Discover Coaches & Organizations</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+                        {[
+                            { name: 'Coach Vijay Singh', sport: 'Cricket', exp: '15 years', athletes: 24, verified: true },
+                            { name: 'Coach Meera Reddy', sport: 'Athletics', exp: '10 years', athletes: 18, verified: true },
+                            { name: 'Pune Sports Academy', sport: 'Multi-Sport', exp: 'Est. 2010', athletes: 150, verified: true },
+                            { name: 'Coach Rajesh Kumar', sport: 'Boxing', exp: '20 years', athletes: 32, verified: true }
+                        ].map((coach, idx) => (
+                            <div key={idx} className="feature-card" style={{ padding: '1.5rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                                    <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'linear-gradient(135deg, #6432ff, #9664ff)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>🎓</div>
+                                    <div style={{ flex: 1 }}>
+                                        <h3 style={{ fontSize: '1rem', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            {coach.name}
+                                            {coach.verified && <span style={{ fontSize: '0.8rem' }}>✅</span>}
+                                        </h3>
+                                        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{coach.sport}</p>
+                                    </div>
+                                </div>
+                                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+                                    <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', background: 'var(--bg-secondary)', borderRadius: '4px' }}>⏱️ {coach.exp}</span>
+                                    <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', background: 'var(--bg-secondary)', borderRadius: '4px' }}>👥 {coach.athletes} Athletes</span>
+                                </div>
+                                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <button className="btn-primary" style={{ flex: 1 }}>Connect</button>
+                                    <button className="btn-secondary" style={{ flex: 1 }}>Email</button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Stats & Videos Tab */}
+            {activeTab === 'stats' && (
+                <div>
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Performance Stats & Video Highlights</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+                        <div className="feature-card">
+                            <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Season Statistics</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                {[
+                                    { label: 'Matches Played', value: '24', change: '+4 this month' },
+                                    { label: 'Win Rate', value: '68%', change: '+5% improvement' },
+                                    { label: 'Points Scored', value: '342', change: 'Personal best' },
+                                    { label: 'Training Hours', value: '156', change: 'This quarter' }
+                                ].map((stat, idx) => (
+                                    <div key={idx} style={{ padding: '1rem', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                                            <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{stat.label}</span>
+                                            <span style={{ fontSize: '1.2rem', fontWeight: '700' }}>{stat.value}</span>
+                                        </div>
+                                        <p style={{ fontSize: '0.75rem', color: 'var(--accent-primary)', margin: 0 }}>{stat.change}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="feature-card">
+                            <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Video Highlights</h3>
+                            <div style={{ display: 'grid', gap: '1rem' }}>
+                                {[
+                                    { title: 'District Finals - Winning Smash', duration: '0:45', views: 342 },
+                                    { title: 'Training Session Highlights', duration: '2:15', views: 128 },
+                                    { title: 'State Championship Match', duration: '1:30', views: 567 }
+                                ].map((video, idx) => (
+                                    <div key={idx} style={{ display: 'flex', gap: '1rem', padding: '1rem', background: 'var(--bg-secondary)', borderRadius: '8px', alignItems: 'center' }}>
+                                        <div style={{ width: '80px', height: '60px', background: 'linear-gradient(135deg, rgba(255,77,0,0.3), rgba(255,0,85,0.3))', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>▶️</div>
+                                        <div style={{ flex: 1 }}>
+                                            <h4 style={{ fontSize: '0.9rem', marginBottom: '0.25rem' }}>{video.title}</h4>
+                                            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{video.duration} • {video.views} views</p>
+                                        </div>
+                                    </div>
+                                ))}
+                                <button className="btn-primary" style={{ width: '100%', marginTop: '0.5rem' }}>+ Upload New Video</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="feature-card">
+                        <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Certificates & Achievements</h3>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+                            {[
+                                { title: 'District Champion 2025', issuer: 'PDA', date: 'Jan 2025' },
+                                { title: 'Level 2 Coaching Certificate', issuer: 'BAI', date: 'Dec 2024' },
+                                { title: 'State Finalist', issuer: 'Maharashtra Sports', date: 'Nov 2024' }
+                            ].map((cert, idx) => (
+                                <div key={idx} style={{ padding: '1rem', background: 'var(--bg-secondary)', borderRadius: '8px', textAlign: 'center' }}>
+                                    <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🏆</div>
+                                    <h4 style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>{cert.title}</h4>
+                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>{cert.issuer}</p>
+                                    <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>{cert.date}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* AI Insights Tab */}
+            {activeTab === 'ai-insights' && (
+                <div>
+                    <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>SportFolio AI Assistant</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
+                        <div>
+                            <div className="feature-card" style={{ marginBottom: '1.5rem', background: 'linear-gradient(135deg, rgba(255,77,0,0.05), rgba(255,0,85,0.05))', border: '2px solid var(--accent-primary)' }}>
+                                <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <span>🤖</span> AI Career Guidance
+                                </h3>
+                                <p style={{ fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '1rem' }}>
+                                    Based on your profile and performance data, here are personalized recommendations:
+                                </p>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                    <div style={{ padding: '1rem', background: 'var(--card-bg)', borderRadius: '8px' }}>
+                                        <h4 style={{ fontSize: '0.95rem', marginBottom: '0.5rem', color: 'var(--accent-primary)' }}>📈 Profile Improvement</h4>
+                                        <p style={{ fontSize: '0.85rem', lineHeight: '1.5' }}>Add 2-3 video highlights to increase profile views by 40%. Recruiters are 3x more likely to contact athletes with video content.</p>
+                                    </div>
+                                    <div style={{ padding: '1rem', background: 'var(--card-bg)', borderRadius: '8px' }}>
+                                        <h4 style={{ fontSize: '0.95rem', marginBottom: '0.5rem', color: 'var(--accent-primary)' }}>⚠️ Injury Risk Awareness</h4>
+                                        <p style={{ fontSize: '0.85rem', lineHeight: '1.5' }}>Your training intensity has increased by 35% in the last month. Consider adding rest days to prevent overtraining injuries.</p>
+                                    </div>
+                                    <div style={{ padding: '1rem', background: 'var(--card-bg)', borderRadius: '8px' }}>
+                                        <h4 style={{ fontSize: '0.95rem', marginBottom: '0.5rem', color: 'var(--accent-primary)' }}>🎯 Career Path</h4>
+                                        <p style={{ fontSize: '0.85rem', lineHeight: '1.5' }}>You're performing in top 15% of Under-19 badminton players in Maharashtra. Focus on state-level tournaments to qualify for nationals.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="feature-card">
+                                <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>💬 Ask AI Anything</h3>
+                                <textarea 
+                                    placeholder="Ask about training plans, injury prevention, career guidance, or profile optimization..."
+                                    style={{
+                                        width: '100%',
+                                        minHeight: '120px',
+                                        padding: '1rem',
+                                        borderRadius: '8px',
+                                        border: '1px solid var(--border-color)',
+                                        background: 'var(--bg-secondary)',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '0.9rem',
+                                        resize: 'vertical',
+                                        fontFamily: 'inherit'
+                                    }}
+                                />
+                                <button className="btn-primary" style={{ marginTop: '1rem', width: '100%' }}>Get AI Response</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="feature-card" style={{ marginBottom: '1.5rem', background: 'linear-gradient(135deg, rgba(0,255,150,0.1), rgba(0,200,255,0.1))', border: '1px solid rgba(0,200,200,0.5)' }}>
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <span>✅</span> AI-Verified Profile
+                                </h3>
+                                <p style={{ fontSize: '0.85rem', lineHeight: '1.6', marginBottom: '1rem' }}>
+                                    Get your profile AI-verified to increase visibility by <strong>60%</strong> and gain recruiter trust!
+                                </p>
+                                <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+                                    <p style={{ marginBottom: '0.5rem' }}>✓ Stats verification</p>
+                                    <p style={{ marginBottom: '0.5rem' }}>✓ Achievement validation</p>
+                                    <p style={{ marginBottom: '0.5rem' }}>✓ Priority in search results</p>
+                                </div>
+                                <button className="btn-primary" style={{ width: '100%' }}>Start Verification</button>
+                            </div>
+
+                            <div className="feature-card">
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>🎯 Quick Actions</h3>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                    <button className="btn-secondary" style={{ width: '100%', textAlign: 'left', padding: '0.75rem 1rem' }}>📊 Analyze Performance</button>
+                                    <button className="btn-secondary" style={{ width: '100%', textAlign: 'left', padding: '0.75rem 1rem' }}>🏋️ Training Plan</button>
+                                    <button className="btn-secondary" style={{ width: '100%', textAlign: 'left', padding: '0.75rem 1rem' }}>💪 Injury Prevention</button>
+                                    <button className="btn-secondary" style={{ width: '100%', textAlign: 'left', padding: '0.75rem 1rem' }}>🎓 Career Roadmap</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Profile Sidebar */}
             {isProfileOpen && (
