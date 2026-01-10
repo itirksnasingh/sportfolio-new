@@ -11,6 +11,8 @@ const LoginPage = () => {
         if (roleParam) {
             setRole(roleParam);
         }
+        // Scroll to top when page loads
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [roleParam]);
 
     const handleLogin = (e) => {

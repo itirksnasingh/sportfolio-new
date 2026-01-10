@@ -23,10 +23,18 @@ const OrgDashboard = () => {
         orgName: 'Pune Sports Academy',
         orgType: 'Multi-Sport Academy',
         location: 'Pune, Maharashtra',
-        established: '2010'
+        established: '2010',
+        email: 'info@punesportsacademy.com',
+        phone: '',
+        website: '',
+        description: '',
+        facilities: '',
+        achievements: ''
     });
     const [profilePhoto, setProfilePhoto] = useState(null);
     const [orgLogo, setOrgLogo] = useState(null);
+    const [reputationScore] = useState(85); // Mock reputation score
+    const [endorsements] = useState(24); // Mock endorsements count
 
     // Auto-open profile sidebar 1.5 seconds after login
     useEffect(() => {
@@ -517,20 +525,318 @@ const OrgDashboard = () => {
                             </label>
                         </div>
 
-                        {/* Placeholder Message */}
-                        <div style={{
-                            padding: '2rem',
-                            textAlign: 'center',
-                            border: '2px dashed var(--border-color)',
-                            borderRadius: 'var(--border-radius)',
-                            backgroundColor: 'var(--bg-secondary)',
-                            marginBottom: '2rem'
-                        }}>
-                            <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🏛️</div>
-                            <h3 style={{ marginBottom: '0.5rem' }}>Profile Fields Coming Soon</h3>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                                Organization-specific profile fields will be added here.
-                            </p>
+                        {/* Profile Form Fields */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            {/* Basic Information */}
+                            <div>
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--accent-primary)' }}>📋 Basic Information</h3>
+                                
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Organization Name *</label>
+                                    <input
+                                        type="text"
+                                        name="orgName"
+                                        value={profileData.orgName}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter organization name"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                                    <div>
+                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Organization Type *</label>
+                                        <select
+                                            name="orgType"
+                                            value={profileData.orgType}
+                                            onChange={handleInputChange}
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                borderRadius: '6px',
+                                                border: '1px solid var(--border-color)',
+                                                backgroundColor: 'var(--bg-secondary)',
+                                                color: 'var(--text-primary)',
+                                                fontSize: '0.95rem',
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                                            <option value="Multi-Sport Academy">Multi-Sport Academy</option>
+                                            <option value="Sports Club">Sports Club</option>
+                                            <option value="Federation">Federation</option>
+                                            <option value="School/College">School/College</option>
+                                            <option value="Recruiter">Recruiter</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Established Year *</label>
+                                        <input
+                                            type="text"
+                                            name="established"
+                                            value={profileData.established}
+                                            onChange={handleInputChange}
+                                            placeholder="e.g., 2010"
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                borderRadius: '6px',
+                                                border: '1px solid var(--border-color)',
+                                                backgroundColor: 'var(--bg-secondary)',
+                                                color: 'var(--text-primary)',
+                                                fontSize: '0.95rem'
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Location *</label>
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        value={profileData.location}
+                                        onChange={handleInputChange}
+                                        placeholder="City, State"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Email *</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={profileData.email}
+                                        onChange={handleInputChange}
+                                        placeholder="organization@example.com"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                                    <div>
+                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Contact Number *</label>
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            value={profileData.phone}
+                                            onChange={handleInputChange}
+                                            placeholder="+91 XXXXXXXXXX"
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                borderRadius: '6px',
+                                                border: '1px solid var(--border-color)',
+                                                backgroundColor: 'var(--bg-secondary)',
+                                                color: 'var(--text-primary)',
+                                                fontSize: '0.95rem'
+                                            }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Website</label>
+                                        <input
+                                            type="url"
+                                            name="website"
+                                            value={profileData.website}
+                                            onChange={handleInputChange}
+                                            placeholder="https://..."
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                borderRadius: '6px',
+                                                border: '1px solid var(--border-color)',
+                                                backgroundColor: 'var(--bg-secondary)',
+                                                color: 'var(--text-primary)',
+                                                fontSize: '0.95rem'
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Description / About *</label>
+                                    <textarea
+                                        name="description"
+                                        value={profileData.description}
+                                        onChange={handleInputChange}
+                                        placeholder="Describe your organization, mission, vision, and values..."
+                                        rows={4}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem',
+                                            resize: 'vertical',
+                                            fontFamily: 'inherit'
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Facilities & Features */}
+                            <div>
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--accent-primary)' }}>🏟️ Facilities & Features</h3>
+                                
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Facilities Available</label>
+                                    <textarea
+                                        name="facilities"
+                                        value={profileData.facilities}
+                                        onChange={handleInputChange}
+                                        placeholder="List available facilities (e.g., Indoor courts, Swimming pool, Gym, Coaching staff, etc.)"
+                                        rows={3}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem',
+                                            resize: 'vertical',
+                                            fontFamily: 'inherit'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Achievements & Recognition</label>
+                                    <textarea
+                                        name="achievements"
+                                        value={profileData.achievements}
+                                        onChange={handleInputChange}
+                                        placeholder="Major achievements, awards, notable athletes produced, championships won, etc."
+                                        rows={3}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem',
+                                            resize: 'vertical',
+                                            fontFamily: 'inherit'
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Community & AI Trust */}
+                            <div>
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--accent-primary)' }}>🤝 Community & AI Trust</h3>
+                                
+                                {/* Reputation Score */}
+                                <div style={{
+                                    padding: '1.5rem',
+                                    background: 'linear-gradient(135deg, rgba(0,255,150,0.1), rgba(0,150,255,0.1))',
+                                    border: '1px solid rgba(0,200,255,0.3)',
+                                    borderRadius: '8px',
+                                    marginBottom: '1rem'
+                                }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                                        <div>
+                                            <h4 style={{ fontSize: '1rem', marginBottom: '0.25rem' }}>Reputation Score</h4>
+                                            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: 0 }}>Based on profile completeness, endorsements & activity</p>
+                                        </div>
+                                        <div style={{ fontSize: '2rem', fontWeight: 'bold', color: reputationScore >= 80 ? '#00ff96' : reputationScore >= 60 ? '#ffa500' : '#ff4d4d' }}>
+                                            {reputationScore}%
+                                        </div>
+                                    </div>
+                                    <div style={{ background: 'var(--bg-secondary)', height: '8px', borderRadius: '4px', overflow: 'hidden' }}>
+                                        <div style={{ 
+                                            width: `${reputationScore}%`, 
+                                            height: '100%', 
+                                            background: reputationScore >= 80 ? 'linear-gradient(90deg, #00ff96, #00d4ff)' : reputationScore >= 60 ? 'linear-gradient(90deg, #ffa500, #ff6b00)' : 'linear-gradient(90deg, #ff4d4d, #ff0055)',
+                                            transition: 'width 0.3s ease'
+                                        }} />
+                                    </div>
+                                </div>
+
+                                {/* Endorsements */}
+                                <div style={{
+                                    padding: '1rem',
+                                    background: 'var(--bg-secondary)',
+                                    borderRadius: '8px',
+                                    marginBottom: '1rem'
+                                }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div>
+                                            <h4 style={{ fontSize: '0.95rem', marginBottom: '0.25rem' }}>👍 Endorsements</h4>
+                                            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: 0 }}>Athletes & coaches who endorse you</p>
+                                        </div>
+                                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--accent-primary)' }}>
+                                            {endorsements}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* AI Fraud Check */}
+                                <div style={{
+                                    padding: '1.5rem',
+                                    background: 'linear-gradient(135deg, rgba(100,50,255,0.1), rgba(150,100,255,0.1))',
+                                    border: '1px solid rgba(100,50,255,0.3)',
+                                    borderRadius: '8px'
+                                }}>
+                                    <h4 style={{ fontSize: '1rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                        <span>🛡️</span> AI Fraud Check
+                                    </h4>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                            <span style={{ fontSize: '1.2rem' }}>✅</span>
+                                            <div>
+                                                <p style={{ fontSize: '0.9rem', fontWeight: '600', margin: 0 }}>No Duplicate Profile Detected</p>
+                                                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: 0 }}>AI verified unique organization</p>
+                                            </div>
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                            <span style={{ fontSize: '1.2rem' }}>✅</span>
+                                            <div>
+                                                <p style={{ fontSize: '0.9rem', fontWeight: '600', margin: 0 }}>Certificate Verification Pending</p>
+                                                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: 0 }}>Upload documents for AI verification</p>
+                                            </div>
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                            <span style={{ fontSize: '1.2rem' }}>🔍</span>
+                                            <div>
+                                                <p style={{ fontSize: '0.9rem', fontWeight: '600', margin: 0 }}>Trust Score: High</p>
+                                                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: 0 }}>Based on community feedback & activity</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button className="btn-primary" style={{ width: '100%', marginTop: '1rem' }}>
+                                        🔒 Get AI Verified
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Action Buttons */}

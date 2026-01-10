@@ -1,17 +1,20 @@
 
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 const Header = ({ theme, toggleTheme }) => {
+    const location = useLocation();
+    const isLoginPage = location.pathname === '/login' || location.pathname === '/get-started';
+    
     return (
         <header className="glass-header">
             <nav>
                 <Link to="/" className="logo" style={{ textDecoration: 'none', color: 'var(--text-primary)' }}>
                     Sport<span className="accent-dot">folio</span>
                 </Link>
-                <ul className="nav-links">
-                    <li style={{ marginLeft: '120px' }}>
+                <ul className="nav-links" style={isLoginPage ? { marginRight: '5rem' } : {}}>
+                    <li style={isLoginPage ? {} : { marginLeft: '90px' }}>
                         <NavLink 
-                            to="/" 
+                            to="/"  
                             end
                             style={({ isActive }) => ({ 
                                 color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
@@ -61,7 +64,9 @@ const Header = ({ theme, toggleTheme }) => {
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                         )}
                     </button>
-                    <Link to="/login" className="btn-primary">Login / Signup</Link>
+                    {!isLoginPage && (
+                        <Link to="/login" className="btn-primary">Login / Signup</Link>
+                    )}
                 </div>
             </nav>
         </header>

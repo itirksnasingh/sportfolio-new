@@ -21,12 +21,19 @@ const CoachDashboard = () => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [profileData, setProfileData] = useState({
         fullName: 'Coach Vijay Singh',
+        email: 'vijay@example.com',
+        phone: '',
+        age: '',
         sport: 'Cricket',
         experience: '15 years',
         specialization: 'Pace Bowling & Batting',
-        location: 'Pune'
+        location: 'Pune',
+        bio: '',
+        certificateType: '',
+        pastTeams: ''
     });
     const [profilePhoto, setProfilePhoto] = useState(null);
+    const [certificate, setCertificate] = useState(null);
 
     // Auto-open profile sidebar 1.5 seconds after login
     useEffect(() => {
@@ -46,6 +53,13 @@ const CoachDashboard = () => {
         const file = e.target.files[0];
         if (file) {
             setProfilePhoto(URL.createObjectURL(file));
+        }
+    };
+
+    const handleCertificateUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setCertificate(file.name);
         }
     };
 
@@ -525,20 +539,311 @@ const CoachDashboard = () => {
                             </label>
                         </div>
 
-                        {/* Placeholder Message */}
-                        <div style={{
-                            padding: '2rem',
-                            textAlign: 'center',
-                            border: '2px dashed var(--border-color)',
-                            borderRadius: 'var(--border-radius)',
-                            backgroundColor: 'var(--bg-secondary)',
-                            marginBottom: '2rem'
-                        }}>
-                            <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>📋</div>
-                            <h3 style={{ marginBottom: '0.5rem' }}>Profile Fields Coming Soon</h3>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                                Coach-specific profile fields will be added here.
-                            </p>
+                        {/* Profile Form Fields */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            {/* Basic Information */}
+                            <div>
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--accent-primary)' }}>📋 Basic Information</h3>
+                                
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Full Name *</label>
+                                    <input
+                                        type="text"
+                                        name="fullName"
+                                        value={profileData.fullName}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter your full name"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                                    <div>
+                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Age *</label>
+                                        <input
+                                            type="number"
+                                            name="age"
+                                            value={profileData.age}
+                                            onChange={handleInputChange}
+                                            placeholder="Age"
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                borderRadius: '6px',
+                                                border: '1px solid var(--border-color)',
+                                                backgroundColor: 'var(--bg-secondary)',
+                                                color: 'var(--text-primary)',
+                                                fontSize: '0.95rem'
+                                            }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Experience *</label>
+                                        <input
+                                            type="text"
+                                            name="experience"
+                                            value={profileData.experience}
+                                            onChange={handleInputChange}
+                                            placeholder="e.g., 15 years"
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                borderRadius: '6px',
+                                                border: '1px solid var(--border-color)',
+                                                backgroundColor: 'var(--bg-secondary)',
+                                                color: 'var(--text-primary)',
+                                                fontSize: '0.95rem'
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Email *</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={profileData.email}
+                                        onChange={handleInputChange}
+                                        placeholder="your.email@example.com"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Contact Number *</label>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value={profileData.phone}
+                                        onChange={handleInputChange}
+                                        placeholder="+91 XXXXXXXXXX"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Coaching Information */}
+                            <div>
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--accent-primary)' }}>🎯 Coaching Information</h3>
+                                
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Sport/Discipline *</label>
+                                    <input
+                                        type="text"
+                                        name="sport"
+                                        value={profileData.sport}
+                                        onChange={handleInputChange}
+                                        placeholder="e.g., Cricket, Football, Badminton"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Specialization</label>
+                                    <input
+                                        type="text"
+                                        name="specialization"
+                                        value={profileData.specialization}
+                                        onChange={handleInputChange}
+                                        placeholder="e.g., Pace Bowling, Goalkeeping, Fitness Training"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Location *</label>
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        value={profileData.location}
+                                        onChange={handleInputChange}
+                                        placeholder="City, State"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Bio / About You</label>
+                                    <textarea
+                                        name="bio"
+                                        value={profileData.bio}
+                                        onChange={handleInputChange}
+                                        placeholder="Brief introduction about your coaching philosophy, achievements, etc."
+                                        rows={4}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem',
+                                            resize: 'vertical',
+                                            fontFamily: 'inherit'
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Verification Documents */}
+                            <div>
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--accent-primary)' }}>✅ Verification Documents</h3>
+                                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+                                    Upload <strong>ANY ONE</strong> of the following documents to verify your coaching credentials:
+                                </p>
+
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Certificate Type *</label>
+                                    <select
+                                        name="certificateType"
+                                        value={profileData.certificateType}
+                                        onChange={handleInputChange}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        <option value="">Select certificate type...</option>
+                                        <optgroup label="Federation Certificates">
+                                            <option value="sai">Sports Authority of India (SAI)</option>
+                                            <option value="state-federation">State Sports Federation</option>
+                                            <option value="national-federation">National Federation (AIFF, BCCI, etc.)</option>
+                                        </optgroup>
+                                        <optgroup label="Institution Proof">
+                                            <option value="school-letter">School/College Appointment Letter</option>
+                                            <option value="academy-id">Academy ID Card</option>
+                                        </optgroup>
+                                        <optgroup label="Sports Proof">
+                                            <option value="player-history">Player History/Career Proof</option>
+                                            <option value="past-teams">Past Teams Coached</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+
+                                <div style={{
+                                    padding: '1.5rem',
+                                    border: '2px dashed var(--border-color)',
+                                    borderRadius: '8px',
+                                    textAlign: 'center',
+                                    backgroundColor: 'var(--bg-secondary)',
+                                    marginBottom: '1rem'
+                                }}>
+                                    {certificate ? (
+                                        <div>
+                                            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📄</div>
+                                            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>{certificate}</p>
+                                            <button
+                                                onClick={() => setCertificate(null)}
+                                                style={{
+                                                    padding: '0.5rem 1rem',
+                                                    background: 'transparent',
+                                                    border: '1px solid var(--border-color)',
+                                                    borderRadius: '6px',
+                                                    cursor: 'pointer',
+                                                    color: 'var(--text-secondary)',
+                                                    fontSize: '0.85rem'
+                                                }}
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <label style={{ cursor: 'pointer', display: 'block' }}>
+                                            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📤</div>
+                                            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>Upload Certificate/Proof</p>
+                                            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>PDF, JPG, PNG (Max 5MB)</p>
+                                            <input
+                                                type="file"
+                                                accept=".pdf,.jpg,.jpeg,.png"
+                                                onChange={handleCertificateUpload}
+                                                style={{ display: 'none' }}
+                                            />
+                                        </label>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Additional Information */}
+                            <div>
+                                <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--accent-primary)' }}>🏆 Additional Information</h3>
+                                
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: '500' }}>Past Teams Coached</label>
+                                    <textarea
+                                        name="pastTeams"
+                                        value={profileData.pastTeams}
+                                        onChange={handleInputChange}
+                                        placeholder="List teams/athletes you've coached (e.g., U-19 State Team, XYZ Academy, Individual players, etc.)"
+                                        rows={3}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--border-color)',
+                                            backgroundColor: 'var(--bg-secondary)',
+                                            color: 'var(--text-primary)',
+                                            fontSize: '0.95rem',
+                                            resize: 'vertical',
+                                            fontFamily: 'inherit'
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         </div>
 
                         {/* Action Buttons */}
