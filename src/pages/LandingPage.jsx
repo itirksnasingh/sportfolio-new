@@ -24,7 +24,7 @@ const LandingPage = () => {
                 <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '2rem' }}>
                     Join the ecosystem that powers Indian sports.
                 </p>
-                <Link to="/login" className="btn-primary big">Get Started Now</Link>
+                <Link to="/get-started" className="btn-primary big">Get Started Now</Link>
             </section>
         </div>
     );

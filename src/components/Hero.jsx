@@ -94,7 +94,7 @@ const Hero = () => {
                 <h1>One Nation. <br /><span className="text-gradient">One Athlete Platform.</span></h1>
                 <p className="hero-sub">The central ecosystem for opportunity discovery, athlete development, and fair visibility in Indian sports.</p>
                 <div className="cta-group">
-                    <Link to="/login" className="btn-primary big">Get Started</Link>
+                    <Link to="/get-started" className="btn-primary big">Get Started</Link>
                     <Link to="/about" className="btn-secondary big">How It Works</Link>
                 </div>
             </div>
