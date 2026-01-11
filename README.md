@@ -74,7 +74,6 @@ The system is built with a focus on accessibility, scalability, and real-world a
 
 ## Project Architecture
 
-```text
 Frontend (React + Vite)
         |
         |  Firebase ID Token
@@ -84,7 +83,6 @@ Backend (Node.js + Express)
         |  Verified Requests
         v
 MongoDB Atlas
-
 
 ## Getting Started
 ## Prerequisites
@@ -101,41 +99,40 @@ npm install
 Run Development Server
 npm run dev
 
-
 Application will be available at:
 
 http://localhost:5173
 
+---
 
-Impact & Use Cases
+###Impact & Use Cases
 
-Grassroots athlete empowerment
+-Grassroots athlete empowerment
+-Fair and data-driven talent discovery
+-Increased accessibility through multilingual support
+-Reduction of geographical and economic barriers in sports scouting
 
-Fair and data-driven talent discovery
+---
 
-Increased accessibility through multilingual support
+###Future Scope
 
-Reduction of geographical and economic barriers in sports scouting
+-Advanced pose estimation across multiple joints
+-Real-time video-based feedback
+-Mobile application support
+-Integration with sports federations and training academies
+-Analytics dashboards for scouts and organizations
 
-Future Scope
+---
 
-Advanced pose estimation across multiple joints
+###Team
 
-Real-time video-based feedback
+-Prathamesh Khaire — Full Stack Development & AI Integration
+-Osman Sanjar - Database Integration 
+-Parth Kumar Jat - UI Design 
+-Sanskriti Singh - Frontend 
 
-Mobile application support
+---
 
-Integration with sports federations and training academies
-
-Analytics dashboards for scouts and organizations
-
-Team
-
-Prathamesh Khaire — Full Stack Development & AI Integration
-Osman Sanjar - Database Integration 
-Parth Kumar Jat - UI Design 
-Sanskriti Singh - Frontend 
-
-License
+###License
 
 This project is licensed under the MIT License.
