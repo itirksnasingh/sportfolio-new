@@ -74,15 +74,15 @@ The system is built with a focus on accessibility, scalability, and real-world a
 
 ## Project Architecture
 
-Frontend (React + Vite)
+- Frontend (React + Vite)
         |
         |  Firebase ID Token
         v
-Backend (Node.js/Flask + Express)
+- Backend (Node.js/Flask + Express)
         |
         |  Verified Requests
         v
-MongoDB Atlas
+- MongoDB Atlas
 
 ## Getting Started
 ## Prerequisites
