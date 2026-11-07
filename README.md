@@ -124,12 +124,6 @@ Future Scope
 
 ---
 
-Team
-
-- Prathamesh Khaire — Full Stack Development & AI Integration
-- Osman Sanjar - Database Integration 
-- Parth Kumar Jat - UI Design 
-- Sanskriti Singh - Frontend 
 
 ---
 
